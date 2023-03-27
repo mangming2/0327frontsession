@@ -1,14 +1,64 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
+import React, { useState } from "react";
+
+function Pokemon(props) {
+  function changePokemonDitto() {
+    const index = props.index;
+    props.setPokemons((prevPokemons) => {
+      const newPokemons = [...prevPokemons];
+      newPokemons[index] = {
+        name: "ditto",
+        image:
+          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png",
+      };
+      return newPokemons;
+    });
+  }
+  return (
+    <li onClick={() => changePokemonDitto()}>
+      <img src={props.image} alt={props.name} />
+      {props.name}
+    </li>
+  );
+}
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [pokemons, setPokemons] = useState([
+    {
+      name: "bulbasaur",
+      image:
+        "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+    },
+    {
+      name: "ivysaur",
+      image:
+        "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png",
+    },
+    {
+      name: "venusaur",
+      image:
+        "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png",
+    },
+  ]);
 
   return (
     <div className="App">
-      <div>hi</div>
+      <div className="container">
+        <h1>pokemon</h1>
+
+        <ul>
+          {pokemons.map((pokemon, i) => {
+            return (
+              <Pokemon
+                name={pokemon.name}
+                image={pokemon.image}
+                index={i}
+                setPokemons={setPokemons}
+              />
+            );
+          })}
+        </ul>
+      </div>
     </div>
   );
 }
